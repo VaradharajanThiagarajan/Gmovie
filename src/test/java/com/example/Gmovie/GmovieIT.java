@@ -48,6 +48,11 @@ public class GmovieIT {
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isCreated());
 
+        mockMvc.perform(get("/movies")
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("length()").value(1))
+                .andExpect(jsonPath("[0].title").value("The Avengers"));
+
 
     }
 

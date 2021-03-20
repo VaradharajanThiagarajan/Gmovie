@@ -11,7 +11,8 @@ public class GmovieController {
 
     @GetMapping("/movies")
     public String getMovies(){
-        return "[]";
+        return "[{'title':'The Avengers'}]";
+
     }
 
     @PostMapping("/movies")
