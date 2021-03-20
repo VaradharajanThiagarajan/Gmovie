@@ -1,23 +1,30 @@
 package com.example.Gmovie;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class GmovieController {
 
+    ArrayList<MovieDto>  movieList;
+
+    public GmovieController(){
+         movieList = new ArrayList<MovieDto>();
+    }
+
     @GetMapping("/movies")
-    public String getMovies(){
-        return "[{'title':'The Avengers'}]";
+    public List<MovieDto> getMovies(){
+        return this.movieList;
 
     }
 
     @PostMapping("/movies")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addMovie(){
+    public void addMovie(@RequestBody MovieDto moviesdto){
+        movieList.add(moviesdto);
 
     }
 }

@@ -1,8 +1,11 @@
 package com.example.Gmovie;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
-@Value
+@Data
+@NoArgsConstructor
 public class MovieDto {
 
     private String title;
