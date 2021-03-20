@@ -1,6 +1,7 @@
 package com.example.Gmovie;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,8 +33,9 @@ public class GmovieController {
     }
 
     @GetMapping("/movies/{movieTitle}")
-    public MovieDto getMovieDetailsByName(@PathVariable String movieTitle) {
-        System.out.println("controller method " + movieTitle);
-        return this.movieService.findByTitle(movieTitle);
+    public ResponseEntity<?> getMovieDetailsByName (@PathVariable String movieTitle) {
+
+            return movieService.findByTitle(movieTitle);
+
     }
 }

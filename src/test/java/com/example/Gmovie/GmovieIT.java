@@ -89,10 +89,16 @@ public class GmovieIT {
 
     }
 
+
+    //Given the GMDB has many movies
+    //When I visit GMDB movies with an existing title
+    //Then I should see that movie's details
+
     @Test
     public void getMovieDetailsByTitle() throws Exception {
         MovieDto movie1 = new MovieDto("The Avengers","Joss Wheadon","Robert Downey Jr.","2012","good movie",1);
         MovieDto movie2 = new MovieDto("The Ballers","mortl","Robert Downey Jr.","2014","bad movie",2);
+        MovieDto movie3 = new MovieDto("The coolers","mortl","Robert Downey Jr.","2014","bad movie",2);
 
 
         mockMvc.perform(post("/movies")
@@ -112,6 +118,22 @@ public class GmovieIT {
                 .andExpect(jsonPath("$.release").value("2012"))
                 .andExpect(jsonPath("$.description").value("good movie"))
                 .andExpect(jsonPath("$.ratings").value(1));
+
+
+
     }
+
+    //Given the GMDB has many movies
+    //When I visit GMDB movies with a non-existing title
+    //Then I receive a friendly message that it doesn't exist
+    @Test
+    public void getMovieDetailsNotFound() throws Exception {
+
+        mockMvc.perform(get(String.format("/movies/%s","somu"))
+        ).andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("movie does not exist"));
+
+    }
+
 
 }

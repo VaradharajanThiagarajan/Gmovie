@@ -1,5 +1,7 @@
 package com.example.Gmovie;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,13 +41,20 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    public MovieDto findByTitle(String movieTitle) {
+    public ResponseEntity<?>  findByTitle(String movieTitle) {
         MovieEntity foundMovie = mockRepository.findByTitle(movieTitle);
-        System.out.println("service method return entity " + foundMovie.getDirector());
-        System.out.println("service method return titles " + foundMovie.getTitle());
-        return new MovieDto(foundMovie.getTitle(), foundMovie.getDirector(),
-                foundMovie.getActors(), foundMovie.getRelease(), foundMovie.getDescription(),
-                foundMovie.getRatings());
+
+        if(foundMovie != null) {
+//            return new MovieDto(foundMovie.getTitle(), foundMovie.getDirector(),
+//                    foundMovie.getActors(), foundMovie.getRelease(), foundMovie.getDescription(),
+//                    foundMovie.getRatings());
+            return new ResponseEntity<MovieEntity>(foundMovie, HttpStatus.OK);
+        }
+
+        MovieMessage message1 = new MovieMessage();
+        message1.message = "movie does not exist";
+        return new ResponseEntity<MovieMessage>(message1, HttpStatus.NOT_FOUND);
+
     }
 
 }
