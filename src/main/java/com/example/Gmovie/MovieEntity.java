@@ -26,4 +26,7 @@ public class MovieEntity {
 
         }
 
+        public String getTitle() {
+                return title;
+        }
 }
