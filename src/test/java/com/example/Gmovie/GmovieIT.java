@@ -61,4 +61,33 @@ public class GmovieIT {
 
     }
 
+    //Given the GMDB has many movies
+    //When I visit GMDB movies
+    //Then I should see that movie in GMDB movies
+
+    @Test
+    public void getManyMovies() throws Exception{
+
+        MovieDto movie1 = new MovieDto("The Avengers");
+        MovieDto movie2 = new MovieDto("The Ballers");
+        mockMvc.perform(post("/movies")
+                .content(objectMapper.writeValueAsString(movie1))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+        mockMvc.perform(post("/movies")
+                .content(objectMapper.writeValueAsString(movie2))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+
+        mockMvc.perform(get("/movies")
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("length()").value(2))
+                .andExpect(jsonPath("[0].title").value("The Avengers"))
+                .andExpect(jsonPath("[1].title").value("The Ballers"));
+
+
+
+    }
+
+
 }
