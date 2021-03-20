@@ -44,6 +44,10 @@ public class GmovieIT {
     //When I submit this new movie to GMDB movies
     //Then I should see that movie in GMDB movies
 
+//    Given the GMDB has a movie
+//    When I visit GMDB movies
+//    Then I should see that movie in GMDB movies
+
     @Test
     public void addMovie() throws Exception{
 
@@ -135,22 +139,7 @@ public class GmovieIT {
 
     }
 
-    //Given an existing movie
-    //When I submit a 5 star rating
-    //Then I can see it in the movie details.
 
-    @Test
-    public void getMovieRating() throws Exception {
-        MovieDto movie1 = new MovieDto("The Avengers","Joss Wheadon","Robert Downey Jr.","2012","good movie",1);
 
-        mockMvc.perform(post("/movies")
-                .content(objectMapper.writeValueAsString(movie1))
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isCreated());
 
-        mockMvc.perform(patch(String.format("/movies/%s/%d", movie1.getTitle(),5))
-        ).andExpect(status().isOk())
-                .andExpect(jsonPath("$.ratings").value(5));
-
-    }
 }
