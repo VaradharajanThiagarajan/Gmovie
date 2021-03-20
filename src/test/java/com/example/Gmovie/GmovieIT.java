@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -135,5 +135,22 @@ public class GmovieIT {
 
     }
 
+    //Given an existing movie
+    //When I submit a 5 star rating
+    //Then I can see it in the movie details.
 
+    @Test
+    public void getMovieRating() throws Exception {
+        MovieDto movie1 = new MovieDto("The Avengers","Joss Wheadon","Robert Downey Jr.","2012","good movie",1);
+
+        mockMvc.perform(post("/movies")
+                .content(objectMapper.writeValueAsString(movie1))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+
+        mockMvc.perform(patch(String.format("/movies/%s/%d", movie1.getTitle(),5))
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.ratings").value(5));
+
+    }
 }
