@@ -25,6 +25,7 @@ public class GmovieIT {
     //Given the GBDB is empty
     //When I visit GMDB movies
     //Then I should see no movies
+    //
 
     @Test
     public void getMoviesEmptyList() throws Exception{
