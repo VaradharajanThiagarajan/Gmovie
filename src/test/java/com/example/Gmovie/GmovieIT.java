@@ -89,5 +89,29 @@ public class GmovieIT {
 
     }
 
+    @Test
+    public void getMovieDetailsByTitle() throws Exception {
+        MovieDto movie1 = new MovieDto("The Avengers","Joss Wheadon","Robert Downey Jr.","2012","good movie",1);
+        MovieDto movie2 = new MovieDto("The Ballers","mortl","Robert Downey Jr.","2014","bad movie",2);
+
+
+        mockMvc.perform(post("/movies")
+                .content(objectMapper.writeValueAsString(movie1))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+        mockMvc.perform(post("/movies")
+                .content(objectMapper.writeValueAsString(movie2))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isCreated());
+
+        mockMvc.perform(get(String.format("/movies/%s", movie1.getTitle()))
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("The Avengers"))
+                .andExpect(jsonPath("$.director").value("Joss Wheadon"))
+                .andExpect(jsonPath("$.actors").value("Robert Downey Jr."))
+                .andExpect(jsonPath("$.release").value("2012"))
+                .andExpect(jsonPath("$.description").value("good movie"))
+                .andExpect(jsonPath("$.ratings").value(1));
+    }
 
 }
