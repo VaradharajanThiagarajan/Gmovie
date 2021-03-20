@@ -30,4 +30,10 @@ public class GmovieController {
         this.movieService.create(moviesdto);
 
     }
+
+    @GetMapping("/movies/{movieTitle}")
+    public MovieDto getMovieDetailsByName(@PathVariable String movieTitle) {
+        System.out.println("controller method " + movieTitle);
+        return this.movieService.findByTitle(movieTitle);
+    }
 }

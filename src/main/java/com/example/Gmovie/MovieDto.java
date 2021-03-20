@@ -30,6 +30,26 @@ public class MovieDto {
 
     }
 
+    public String getDirector() {
+        return this.director;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public String getRelease() {
+        return release;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getRatings() {
+        return ratings;
+    }
+
     public String getTitle() {
         return title;
     }
