@@ -9,22 +9,25 @@ import java.util.List;
 @RestController
 public class GmovieController {
 
-    ArrayList<MovieDto>  movieList;
+   // ArrayList<MovieDto>  movieList;
+    MovieService movieService;
 
-    public GmovieController(){
-         movieList = new ArrayList<MovieDto>();
+    public GmovieController(MovieService movieService){
+         //movieList = new ArrayList<MovieDto>();
+        this.movieService = movieService ;
     }
 
     @GetMapping("/movies")
     public List<MovieDto> getMovies(){
-        return this.movieList;
+        return this.movieService.fetchAll();
 
     }
 
     @PostMapping("/movies")
     @ResponseStatus(HttpStatus.CREATED)
     public void addMovie(@RequestBody MovieDto moviesdto){
-        movieList.add(moviesdto);
+        //movieList.add(moviesdto);
+        this.movieService.create(moviesdto);
 
     }
 }
